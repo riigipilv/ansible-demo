@@ -1,0 +1,2 @@
+---
+ansible_install_version_pip: '4'
