@@ -1,0 +1,6 @@
+all:
+  hosts:
+    171.22.247.103
+
+  vars:
+    ansible_user: ubuntu
