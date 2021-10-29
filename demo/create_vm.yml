@@ -1,0 +1,48 @@
+# ansible-playbook -M .<<python_directory>>/lib/site-packages setup_all_inventory.yml -K
+- hosts:
+    localhost
+
+  vars:
+    api_url: 'https://api.riigipilv.ee/api'
+    inventory_hostname: "{{ lookup('env','USER') }}.demo.sise"
+    flavor: 'g1.small1'
+    image: 'Ubuntu 18.04 x86_64'
+    floating_ip: 'auto'
+    subnet: 'ansible-training-rp-sub-net'
+    project_name: 'Ansible RP seminar'
+    offering_name: 'Virtual machine in ansible-training-rp'
+    security_groups: 'public-restricted'
+    system_volume_size: '20'
+    system_volume_type: 'standard'
+    data_volume_size: '20'
+    data_volume_type: 'ssd'
+
+  vars_prompt:
+    - name: 'ssh_key'
+      prompt: 'Enter ssh key name'
+      private: no
+    - name: 'access_token'
+      prompt: 'Enter Riigipilv API access token'
+      private: yes
+
+
+
+  tasks:
+    - name: create instance
+      waldur_marketplace_os_instance:
+        access_token: '{{ access_token }}'
+        api_url: '{{ api_url }}'
+        flavor: '{{ flavor }}'
+        image: '{{ image }}'
+        name: '{{ inventory_hostname }}'
+        networks:
+          - floating_ip: '{{floating_ip}}'
+            subnet: '{{ subnet }}'
+        project: '{{project_name}}'
+        offering: '{{offering_name}}'
+        security_groups: '{{security_groups}}'
+        ssh_key: '{{ ssh_key }}'
+        data_volume_size: '{{data_volume_size}}'
+        data_volume_type: '{{data_volume_type}}'
+        system_volume_size: '{{system_volume_size}}'
+        system_volume_type: '{{system_volume_type}}'
