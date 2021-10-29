@@ -26,7 +26,7 @@
       private: yes
 
   tasks:
-    - name: create instance
+    - name: Create instance
       waldur_marketplace_os_instance:
         access_token: '{{ access_token }}'
         api_url: '{{ api_url }}'
