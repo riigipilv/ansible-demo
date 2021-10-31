@@ -9,6 +9,7 @@
     image: 'Ubuntu 20.04 x86_64'
     floating_ip: 'auto'
     subnet: 'ansible-training-rp-sub-net'
+    provider_name: 'ansible-training-rp'
     project_name: 'Ansible RP seminar'
     offering_name: 'Virtual machine in ansible-training-rp'
     security_groups: 'public-restricted'
@@ -26,6 +27,21 @@
       private: yes
 
   tasks:
+    - name: Create security group
+      waldur_os_security_group:
+        access_token: '{{ access_token }}'
+        api_url: '{{ api_url }}'
+        tenant: '{{ provider_name }}'
+        project: '{{ project_name }}'
+        description: Security group with limited access to public facing services
+        rules:
+          - { protocol: tcp, direction: ingress, from_port: 22, to_port: 22, cidr: 171.22.247.103/32, description: shared ansible }
+          - { protocol: tcp, direction: ingress, from_port: 22, to_port: 22, cidr: 91.191.25.90/32, description: Viinistu }
+          - { protocol: tcp, direction: ingress, from_port: 22, to_port: 22, cidr: 195.80.118.162/32, description: RIA GW }
+          - { protocol: tcp, direction: ingress, from_port: 80, to_port: 80, cidr: 195.80.118.162/32, description: RIA GW }
+        state: present
+        name: public-restricted
+
     - name: create instance
       waldur_marketplace_os_instance:
         access_token: '{{ access_token }}'
