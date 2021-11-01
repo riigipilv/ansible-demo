@@ -1,0 +1,16 @@
+---
+- name: Nginx conf
+  copy:
+    src: "nginx.conf"
+    dest: "{{NGINX_CONF}}"
+
+
+- name: Nginx site
+  copy:
+    src: "default"
+    dest: "{{MY_SITE}}"
+
+- name: Index.html
+  template:
+    src: "index.html.j2"
+    dest: "{{INDEX_PATH}}/index.html"
