@@ -1,4 +1,4 @@
-# ansible-playbook -M /usr/local/lib/python3.8/dist-packages setup_all_inventory.yml -K
+# ansible-playbook -M /usr/local/lib/python3.8/dist-packages create_vm.yml
 - hosts:
     localhost
 
@@ -12,7 +12,9 @@
     provider_name: 'ansible-training-rp'
     project_name: 'Ansible RP seminar'
     offering_name: 'Virtual machine in ansible-training-rp'
-    security_groups: 'public-restricted'
+    security_groups:
+     - 'public-restricted'
+     - 'default'
     system_volume_size: '20'
     system_volume_type: 'standard'
     data_volume_size: '20'

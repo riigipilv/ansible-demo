@@ -17,14 +17,34 @@ ssh-keygen -b 2048 -t rsa
 4. Logi sisse Riigipilve iseteenindusportaali - https://riigipliv.ee, ja impordi oma avalik võti enda
 profiili alla. Selleks kuva oma avalik võti konsoolis,
 ```shell
-cat cat ~/.ssh/id_rsa.pub
+cat ~/.ssh/id_rsa.pub
 ```
 copy kuvatud võti clipboard -i ja pasteeri see Riigipilve iseteenindusportaali:
 
 ![img.png](readme_images/img.png)
+
+Jäta aken lahti, sest seda läheb sul veel hiljem vaja
 
 5. Lae alla Ansible nädisprojekt:
 ```shell
 git clone --depth 1 https://github.com/riigipilv/ansible-demo.git
 ```
 6. Asume uurima Ansible projekti struktuuri
+
+
+7. Tekitame endale Ansible abiga Riigipilve om VM -i
+ 
+```shell
+~/ansible-demo/demo$ ansible-playbook -M /usr/local/lib/python3.8/dist-packages create_vm.yml
+```
+Script küsib Sinu käest ssh public võtme nime ja API tokenit.
+Kui kõik läheb hästi ja vigu ei ole, siis saad Riigipilve UI -s vaadata, kas masin tekitati. Jäta masina juures meelde avalik IP
+
+8. Installime veebi serveri
+
+Uuendame faili `./invtory.site.yml` ja paneme sinna loodud masina IP aadressi
+Jooksuta playbooki `install_webserver.yml`:
+```shell
+~/ansible-demo/demo$ ansible-playbook -i inventory/site.yml install_webserver.yml
+```
+
