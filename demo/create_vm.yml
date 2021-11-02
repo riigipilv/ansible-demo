@@ -38,9 +38,11 @@
         description: Security group with limited access to public facing services
         rules:
           - { protocol: tcp, direction: ingress, from_port: 22, to_port: 22, cidr: 171.22.247.103/32, description: shared ansible }
-          - { protocol: tcp, direction: ingress, from_port: 22, to_port: 22, cidr: 91.191.25.90/32, description: Viinistu }
+          - { protocol: tcp, direction: ingress, from_port: 22, to_port: 22, cidr: 90.191.25.90/32, description: Viinistu }
           - { protocol: tcp, direction: ingress, from_port: 22, to_port: 22, cidr: 195.80.118.162/32, description: RIA GW }
           - { protocol: tcp, direction: ingress, from_port: 80, to_port: 80, cidr: 195.80.118.162/32, description: RIA GW }
+          - { protocol: tcp, direction: ingress, from_port: 80, to_port: 80, cidr: 90.191.25.90/32, description: Viinistu }
+
         state: present
         name: public-restricted
 
